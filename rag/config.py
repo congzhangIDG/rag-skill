@@ -74,7 +74,7 @@ def loadConfig(config_path: Optional[str] = None) -> Dict[str, Any]:
   base = getDefaultConfig()
 
   if resolvedPath is None:
-    return _expandPaths(base)
+    return _expandPaths(_applyEnvOverrides(base))
 
   if not os.path.exists(resolvedPath):
     raise FileNotFoundError(f"配置文件不存在: {resolvedPath}")
@@ -85,7 +85,7 @@ def loadConfig(config_path: Optional[str] = None) -> Dict[str, Any]:
     raise ValueError("配置文件格式错误：期望 YAML 顶层为对象")
 
   merged = _deepMerge(base, data)
-  return _expandPaths(merged)
+  return _expandPaths(_applyEnvOverrides(merged))
 
 
 def _resolveConfigPath(config_path: Optional[str]) -> Optional[str]:
@@ -122,4 +122,21 @@ def _expandPaths(config: Dict[str, Any]) -> Dict[str, Any]:
     persistDir = store.get("persist_dir")
     if isinstance(persistDir, str):
       store["persist_dir"] = os.path.expanduser(persistDir)
+  return config
+
+
+_ENV_OVERRIDES = (
+  ("RAG_EMBEDDING_SERVICE_URL", "embedding", "service_url"),
+  ("RAG_RERANK_SERVICE_URL", "rerank", "service_url"),
+  ("RAG_LLM_BASE_URL", "llm", "base_url"),
+)
+
+
+def _applyEnvOverrides(config: Dict[str, Any]) -> Dict[str, Any]:
+  for envKey, section, field in _ENV_OVERRIDES:
+    val = os.environ.get(envKey)
+    if val:
+      if section not in config or not isinstance(config[section], dict):
+        config[section] = {}
+      config[section][field] = val
   return config

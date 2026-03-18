@@ -1,10 +1,10 @@
 embedding:
-  service_url: "https://brain.idgcapital.com/embed"
+  # service_url 由环境变量 RAG_EMBEDDING_SERVICE_URL 提供
   batch_size: 16
   dimension: 768
 
 rerank:
-  service_url: "https://brain.idgcapital.com/rerank"
+  # service_url 由环境变量 RAG_RERANK_SERVICE_URL 提供
   batch_size: 16
 
 chunking:
@@ -17,7 +17,7 @@ store:
 
 llm:
   provider: "openai_compatible"
-  base_url: "http://llm.idgcapital.com:8080/v1"
+  # base_url 由环境变量 RAG_LLM_BASE_URL 提供
   model: "default"
   temperature: 0.1
   max_tokens: 2048
