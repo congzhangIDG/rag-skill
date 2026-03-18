@@ -3,11 +3,13 @@ from __future__ import annotations
 from typing import Dict
 
 from rag.ingestion.base import BaseIngester, IngestedDocument
+from rag.ingestion.code import CodeIngester, DirectoryIngester
 from rag.ingestion.text import TextIngester
 
 
 _INGESTER_REGISTRY: Dict[str, BaseIngester] = {
   "text": TextIngester(),
+  "code": CodeIngester(),
 }
 
 
@@ -18,6 +20,8 @@ def getIngester(source_type: str) -> BaseIngester:
 __all__ = [
   "IngestedDocument",
   "BaseIngester",
+  "CodeIngester",
+  "DirectoryIngester",
   "TextIngester",
   "getIngester",
 ]
