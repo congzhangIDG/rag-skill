@@ -3,3 +3,5 @@ requests>=2.31.0
 pyyaml>=6.0
 trafilatura>=2.0.0
 yt-dlp>=2024.0.0
+filelock>=3.0.0
+pysqlite3>=0.5.2
