@@ -28,6 +28,10 @@ def detectSourceType(input_path: str) -> str:
   _, ext = os.path.splitext(lower)
   if ext == ".pdf":
     return "pdf"
+  if ext == ".docx":
+    return "docx"
+  if ext == ".xlsx":
+    return "xlsx"
   if ext in {".md", ".txt", ".rst"}:
     return "text"
   if ext in {".py", ".js", ".ts", ".tsx", ".jsx", ".go", ".rs", ".java", ".cpp", ".c", ".h", ".cs", ".rb", ".php", ".swift", ".kt"}:
@@ -298,11 +302,15 @@ def _getIngesterCreator(sourceType: str):
   if sourceType == "code":
     return _tryCreateAdapter("rag.ingestion.code", "CodeIngester")
   if sourceType == "pdf":
-    return _tryCreateAdapter("rag.ingestion.document", "DocumentIngester")
+    return _tryCreateAdapter("rag.ingestion.document", "PdfIngester")
+  if sourceType == "docx":
+    return _tryCreateAdapter("rag.ingestion.document", "DocxIngester")
+  if sourceType == "xlsx":
+    return _tryCreateAdapter("rag.ingestion.document", "XlsxIngester")
   if sourceType == "web":
     return _tryCreateAdapter("rag.ingestion.web", "WebIngester")
   if sourceType == "youtube":
-    return _tryCreateAdapter("rag.ingestion.youtube", "YouTubeIngester")
+    return _tryCreateAdapter("rag.ingestion.youtube", "YoutubeIngester")
   return None
 
 
