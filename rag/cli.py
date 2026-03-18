@@ -370,7 +370,7 @@ def _fallbackIngestCode(source: str, cfg: Dict[str, Any]):
         size = os.path.getsize(fp)
         if size > maxBytes:
           continue
-    except Exception:
+    except OSError:
       pass
 
     try:
@@ -379,7 +379,7 @@ def _fallbackIngestCode(source: str, cfg: Dict[str, Any]):
       rawParts.append(fp.encode("utf-8") + b"\n" + b)
       t = b.decode("utf-8", errors="replace")
       texts.append(f"\n\n# FILE: {fp}\n\n{t}")
-    except Exception:
+    except (OSError, UnicodeDecodeError):
       continue
 
   combinedText = "".join(texts).strip()

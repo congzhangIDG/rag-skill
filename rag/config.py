@@ -9,12 +9,12 @@ import yaml
 def getDefaultConfig() -> Dict[str, Any]:
   return {
     "embedding": {
-      "service_url": "https://brain.idgcapital.com/embed",
+      "service_url": "",
       "batch_size": 16,
       "dimension": 768,
     },
     "rerank": {
-      "service_url": "https://brain.idgcapital.com/rerank",
+      "service_url": "",
       "batch_size": 16,
     },
     "chunking": {
@@ -27,7 +27,7 @@ def getDefaultConfig() -> Dict[str, Any]:
     },
     "llm": {
       "provider": "openai_compatible",
-      "base_url": "http://llm.idgcapital.com:8080/v1",
+      "base_url": "",
       "model": "default",
       "temperature": 0.1,
       "max_tokens": 2048,
