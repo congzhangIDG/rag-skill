@@ -13,7 +13,7 @@
 
 ## 快速开始
 
-### 安装依赖
+### 安装
 
 ```bash
 # 推荐：使用安装脚本（自动安装依赖 + 初始化配置文件）
@@ -23,8 +23,8 @@ bash scripts/install.sh
 bash scripts/install.sh --all
 
 # 或手动安装
-pip install -r requirements.txt
-pip install -r requirements-optional.txt  # 可选
+pip install -r scripts/requirements.txt
+pip install -r scripts/requirements-optional.txt  # 可选
 ```
 
 ### 配置
@@ -40,10 +40,13 @@ cp assets/.env.example .env
 ### 使用
 
 ```bash
-# 索引文本文件
-python -m rag.cli index README.md
+# 所有命令在 scripts/ 目录下执行
+cd scripts/
 
-# 索引代码目录（路径以 / 结尾）
+# 索引文本文件
+python -m rag.cli index ~/docs/README.md
+
+# 索引代码目录
 python -m rag.cli index src/
 
 # 索引网页
@@ -85,35 +88,29 @@ python -m rag.cli forget <doc_id>
 ## 项目结构
 
 ```
-├── SKILL.md                  # Claude Skill 定义
-├── config.yaml               # 运行时配置
+├── SKILL.md                       # Claude Skill 总控说明
+├── README.md                      # 本文件
 ├── scripts/
-│   ├── install.sh            # Linux/macOS 安装脚本
-│   └── install.ps1           # Windows 安装脚本
+│   ├── rag/                       # Python 源码包
+│   ├── tests/                     # 测试
+│   ├── install.sh                 # Linux/macOS 安装脚本
+│   ├── install.ps1                # Windows 安装脚本
+│   ├── requirements.txt           # 基础依赖
+│   ├── requirements-optional.txt  # 可选依赖
+│   └── pyproject.toml             # 项目配置
 ├── assets/
-│   ├── config.yaml.template  # 配置文件模板
-│   └── .env.example          # 环境变量模板
-├── reference/
-│   ├── api.md                # CLI 命令与数据模型参考
-│   └── configuration.md      # 配置项详解
-├── rag/
-│   ├── cli.py                # CLI 入口
-│   ├── config.py             # 配置加载
-│   ├── models.py             # 数据模型与 ID 生成
-│   ├── chunker.py            # 文本/代码分块
-│   ├── store.py              # ChromaDB 向量存储
-│   ├── embedding.py          # Embedding 客户端
-│   ├── reranker.py           # Rerank 客户端
-│   ├── retriever.py          # 检索器
-│   ├── llm.py                # LLM 客户端
-│   └── ingestion/            # 数据源摄取器
-├── requirements.txt          # 基础依赖
-└── requirements-optional.txt # 可选依赖
+│   ├── config.yaml.template       # 配置文件模板
+│   └── .env.example               # 环境变量模板
+└── references/
+    ├── AGENTS.md                  # AI 代理编码规范
+    ├── api.md                     # CLI 命令与数据模型参考
+    └── configuration.md           # 配置项详解
 ```
 
 ## 测试
 
 ```bash
+cd scripts/
 pytest                                    # 全部测试
 pytest tests/test_chunker.py              # 单个文件
 pytest tests/test_chunker.py::test_xxx -v # 单个函数

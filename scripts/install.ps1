@@ -9,13 +9,14 @@ param(
 
 $ErrorActionPreference = "Stop"
 $SkillDir = Split-Path -Parent (Split-Path -Parent $PSCommandPath)
+$ScriptsDir = Split-Path -Parent $PSCommandPath
 
 Write-Host "==> 安装 RAG Skill 基础依赖..."
-pip install -r "$SkillDir\requirements.txt"
+pip install -r "$ScriptsDir\requirements.txt"
 
 if ($WithDocs -or $All) {
   Write-Host "==> 安装文档处理依赖（PDF/DOCX/XLSX）..."
-  pip install -r "$SkillDir\requirements-optional.txt"
+  pip install -r "$ScriptsDir\requirements-optional.txt"
 }
 
 if ($WithWhisper -or $All) {
@@ -42,4 +43,4 @@ if (-not (Test-Path "$SkillDir\.env")) {
 Write-Host "==> 安装完成。"
 Write-Host "  配置文件: $SkillDir\config.yaml"
 Write-Host "  环境变量: $SkillDir\.env"
-Write-Host "  运行测试: cd $SkillDir; pytest"
+Write-Host "  运行测试: cd $ScriptsDir; pytest"

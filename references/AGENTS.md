@@ -7,7 +7,7 @@ RAG (Retrieval-Augmented Generation) CLI 工具，支持多种数据源（文本
 ## 项目结构
 
 ```
-rag/
+scripts/rag/
 ├── __init__.py          # 版本号
 ├── cli.py               # CLI 入口、命令处理（index/query/status/forget）
 ├── config.py            # YAML 配置加载、环境变量覆盖、深度合并
@@ -29,7 +29,11 @@ rag/
 
 ## 构建与测试
 
+所有命令在 `scripts/` 目录下执行：
+
 ```bash
+cd scripts/
+
 # 安装依赖
 pip install -r requirements.txt
 
@@ -49,12 +53,12 @@ pytest tests/test_chunker.py::test_function_name -v
 pytest -k "keyword" -v
 ```
 
-**注意**：`pyproject.toml` 配置了 `testpaths = ["tests"]`、`pythonpath = ["."]`。tests 目录已加入 `.gitignore`。项目无 linter/formatter 配置，无 CI 流水线。
+**注意**：`scripts/pyproject.toml` 配置了 `testpaths = ["tests"]`、`pythonpath = ["."]`。项目无 linter/formatter 配置，无 CI 流水线。
 
 ## 配置机制
 
 - YAML 配置路径优先级：`--config` 参数 > `RAG_CONFIG` 环境变量 > `~/.claude/skills/rag/config.yaml`
-- URL 通过环境变量注入（参见 `.env.example`）：
+- URL 通过环境变量注入（参见 `assets/.env.example`）：
   - `RAG_EMBEDDING_SERVICE_URL` → `embedding.service_url`
   - `RAG_RERANK_SERVICE_URL` → `rerank.service_url`
   - `RAG_LLM_BASE_URL` → `llm.base_url`
