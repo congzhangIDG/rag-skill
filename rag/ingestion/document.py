@@ -23,7 +23,11 @@ class PdfIngester(BaseIngester):
     except ImportError as e:
       raise ImportError("请安装 unstructured: pip install 'unstructured[all-docs]'") from e
 
-    elements = partition_pdf(source)
+    elements = partition_pdf(
+      source,
+      extract_images_in_pdf=False,
+      infer_table_structure=False,
+    )
     text = "\n\n".join(str(el) for el in elements)
 
     with open(source, "rb") as f:
