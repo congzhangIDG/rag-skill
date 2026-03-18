@@ -68,3 +68,35 @@ class Retriever:
 
     results.sort(key=lambda r: r.score, reverse=True)
     return results[: self.rerankTopK]
+
+  def retrieveAndAnswer(self, question: str, llm_client: Optional[Any] = None) -> dict:
+    results = self.retrieve(question)
+
+    sources: List[dict] = []
+    contexts: List[str] = []
+    sourceRefs: List[dict] = []
+    for r in results:
+      excerpt = r.text
+      if len(excerpt) > 200:
+        excerpt = excerpt[:200]
+
+      sources.append(
+        {
+          "source_uri": r.source_uri,
+          "title": r.title,
+          "score": float(r.score),
+          "excerpt": excerpt,
+        }
+      )
+      contexts.append(r.text)
+      sourceRefs.append({"source_uri": r.source_uri, "title": r.title})
+
+    answer = ""
+    if llm_client is not None:
+      answer = llm_client.generateAnswer(question, contexts, sourceRefs)
+
+    return {
+      "answer": answer,
+      "sources": sources,
+      "chunks_used": len(results),
+    }
