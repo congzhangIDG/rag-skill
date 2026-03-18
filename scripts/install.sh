@@ -5,14 +5,14 @@
 set -euo pipefail
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+SCRIPTS_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "==> 安装 RAG Skill 基础依赖..."
-pip install -r "$SKILL_DIR/requirements.txt"
+pip install -r "$SCRIPTS_DIR/requirements.txt"
 
-# 可选：文档支持（PDF/DOCX/XLSX）
 if [[ "${1:-}" == "--with-docs" || "${1:-}" == "--all" ]]; then
   echo "==> 安装文档处理依赖（PDF/DOCX/XLSX）..."
-  pip install -r "$SKILL_DIR/requirements-optional.txt"
+  pip install -r "$SCRIPTS_DIR/requirements-optional.txt"
 fi
 
 # 可选：YouTube Whisper 转录（需要 ffmpeg）
@@ -41,4 +41,4 @@ fi
 echo "==> 安装完成。"
 echo "  配置文件: $SKILL_DIR/config.yaml"
 echo "  环境变量: $SKILL_DIR/.env"
-echo "  运行测试: cd $SKILL_DIR && pytest"
+echo "  运行测试: cd $SCRIPTS_DIR && pytest"
