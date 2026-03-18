@@ -1,13 +1,29 @@
 import os
-import sqlite3
+import sys
 
 import pytest
 
-_SQLITE_OK = tuple(int(x) for x in sqlite3.sqlite_version.split(".")) >= (3, 35, 0)
-pytestmark = pytest.mark.skipif(not _SQLITE_OK, reason="需要 sqlite3>=3.35.0 才能运行 ChromaDB 测试")
+try:
+  import pysqlite3  # type: ignore
 
-if not _SQLITE_OK:
+  sys.modules["sqlite3"] = pysqlite3
+except Exception:
+  pass
+
+import sqlite3
+
+
+def _getSqliteVersionTuple():
+  parts = sqlite3.sqlite_version.split(".")
+  nums = [int(p) for p in parts[:3]]
+  while len(nums) < 3:
+    nums.append(0)
+  return tuple(nums)
+
+
+if _getSqliteVersionTuple() < (3, 35, 0):
   pytest.skip("需要 sqlite3>=3.35.0 才能运行 ChromaDB 测试", allow_module_level=True)
+
 
 # ruff: noqa: E402
 
