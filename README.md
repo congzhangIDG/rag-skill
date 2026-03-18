@@ -16,21 +16,26 @@
 ### 安装依赖
 
 ```bash
-pip install -r requirements.txt
+# 推荐：使用安装脚本（自动安装依赖 + 初始化配置文件）
+bash scripts/install.sh
 
-# 可选：PDF/DOCX/XLSX 文档支持、YouTube Whisper 转录
-pip install -r requirements-optional.txt
+# 安装全部依赖（含文档处理 + Whisper）
+bash scripts/install.sh --all
+
+# 或手动安装
+pip install -r requirements.txt
+pip install -r requirements-optional.txt  # 可选
 ```
 
 ### 配置
 
-复制 `.env.example` 为 `.env`，填入实际服务地址：
+复制 `assets/.env.example` 为 `.env`，填入实际服务地址：
 
 ```bash
-cp .env.example .env
+cp assets/.env.example .env
 ```
 
-其余参数（分块大小、batch_size 等）在 `config.yaml` 中调整。
+其余参数（分块大小、batch_size 等）在 `config.yaml` 中调整。配置模板见 `assets/config.yaml.template`。
 
 ### 使用
 
@@ -80,17 +85,30 @@ python -m rag.cli forget <doc_id>
 ## 项目结构
 
 ```
-rag/
-├── cli.py          # CLI 入口
-├── config.py       # 配置加载
-├── models.py       # 数据模型与 ID 生成
-├── chunker.py      # 文本/代码分块
-├── store.py        # ChromaDB 向量存储
-├── embedding.py    # Embedding 客户端
-├── reranker.py     # Rerank 客户端
-├── retriever.py    # 检索器
-├── llm.py          # LLM 客户端
-└── ingestion/      # 数据源摄取器
+├── SKILL.md                  # Claude Skill 定义
+├── config.yaml               # 运行时配置
+├── scripts/
+│   ├── install.sh            # Linux/macOS 安装脚本
+│   └── install.ps1           # Windows 安装脚本
+├── assets/
+│   ├── config.yaml.template  # 配置文件模板
+│   └── .env.example          # 环境变量模板
+├── reference/
+│   ├── api.md                # CLI 命令与数据模型参考
+│   └── configuration.md      # 配置项详解
+├── rag/
+│   ├── cli.py                # CLI 入口
+│   ├── config.py             # 配置加载
+│   ├── models.py             # 数据模型与 ID 生成
+│   ├── chunker.py            # 文本/代码分块
+│   ├── store.py              # ChromaDB 向量存储
+│   ├── embedding.py          # Embedding 客户端
+│   ├── reranker.py           # Rerank 客户端
+│   ├── retriever.py          # 检索器
+│   ├── llm.py                # LLM 客户端
+│   └── ingestion/            # 数据源摄取器
+├── requirements.txt          # 基础依赖
+└── requirements-optional.txt # 可选依赖
 ```
 
 ## 测试

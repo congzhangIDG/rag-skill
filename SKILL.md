@@ -33,21 +33,34 @@ allowed-tools:
 ## 前置检查（每次执行前确认）
 
 1. Python 3.10+ 可用
-2. 安装基础依赖（必需）：
+2. 运行安装脚本（推荐）：
+
+```bash
+# Linux / macOS
+bash ~/.claude/skills/rag/scripts/install.sh
+
+# Windows PowerShell
+powershell -ExecutionPolicy Bypass -File ~/.claude/skills/rag/scripts/install.ps1
+```
+
+3. 或手动安装基础依赖：
 
 ```bash
 cd ~/.claude/skills/rag
 pip install -r requirements.txt
 ```
 
-3. 安装可选依赖（PDF/Word/Excel 支持）：
+4. 安装可选依赖（PDF/Word/Excel 支持）：
 
 ```bash
-cd ~/.claude/skills/rag
+# 通过安装脚本
+bash ~/.claude/skills/rag/scripts/install.sh --with-docs
+
+# 或手动安装
 pip install -r requirements-optional.txt
 ```
 
-4. 可选：若你启用 YouTube Whisper 转录路径，通常需要 `ffmpeg`：
+5. 可选：若你启用 YouTube Whisper 转录路径，通常需要 `ffmpeg`：
 
 ```bash
 # macOS
@@ -293,14 +306,40 @@ store:
 
 ---
 
+## 目录结构
+
+```
+~/.claude/skills/rag/
+├── SKILL.md                # 本文件（Skill 定义）
+├── config.yaml             # 运行时配置（从模板生成）
+├── .env                    # 环境变量（从模板生成，不入库）
+├── rag/                    # 核心源码
+├── scripts/
+│   ├── install.sh          # Linux/macOS 安装脚本
+│   └── install.ps1         # Windows 安装脚本
+├── assets/
+│   ├── config.yaml.template  # 配置文件模板
+│   └── .env.example          # 环境变量模板
+├── reference/
+│   ├── api.md              # CLI 命令与数据模型参考
+│   └── configuration.md    # 配置项详解
+├── requirements.txt        # 基础依赖
+└── requirements-optional.txt  # 可选依赖
+```
+
 ## 安装指南
 
 ```bash
+# 推荐：使用安装脚本（自动安装依赖 + 初始化配置）
+bash ~/.claude/skills/rag/scripts/install.sh
+
+# 安装全部依赖（含文档处理 + Whisper）
+bash ~/.claude/skills/rag/scripts/install.sh --all
+
+# 手动安装
 cd ~/.claude/skills/rag
 pip install -r requirements.txt
-
-# 可选（PDF/Word/Excel 支持）
-pip install -r requirements-optional.txt
+pip install -r requirements-optional.txt  # 可选
 ```
 
 ---

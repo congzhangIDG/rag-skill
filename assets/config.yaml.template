@@ -1,0 +1,36 @@
+# RAG Skill 配置模板
+# 复制此文件到项目根目录并重命名为 config.yaml
+# URL 地址建议通过环境变量注入（参见 .env.example）
+
+embedding:
+  # service_url 由环境变量 RAG_EMBEDDING_SERVICE_URL 提供
+  batch_size: 16
+  dimension: 768
+
+rerank:
+  # service_url 由环境变量 RAG_RERANK_SERVICE_URL 提供
+  batch_size: 16
+
+chunking:
+  chunk_size: 600
+  overlap_size: 100
+
+store:
+  persist_dir: "~/.claude/skills/rag/.data/chroma"
+  default_collection: "rag_default"
+
+llm:
+  provider: "openai_compatible"
+  # base_url 由环境变量 RAG_LLM_BASE_URL 提供
+  model: "default"
+  temperature: 0.1
+  max_tokens: 2048
+
+ingestion:
+  code_extensions: [".py", ".js", ".ts", ".tsx", ".jsx", ".go", ".rs", ".java", ".cpp", ".c", ".h", ".cs", ".rb", ".php", ".swift", ".kt"]
+  ignore_patterns: ["node_modules", ".git", "__pycache__", ".venv", "dist", "build", ".next"]
+  max_file_size_mb: 10
+
+retrieval:
+  top_k: 10
+  rerank_top_k: 5
