@@ -1,2 +1,11 @@
+# YouTube Whisper 转录（需要 ffmpeg）
 openai-whisper>=20240930
-unstructured[all-docs]>=0.15.0
+
+# 文档支持（PDF/DOCX/XLSX）- Windows 推荐用 pip 安装预编译 wheel
+# 完整版（可能需要 MSYS2 编译）：
+#   pip install "unstructured[all-docs]>=0.15.0"
+# 
+# Windows 最小安装（推荐）：
+pip install "unstructured[docx]>=0.15.0"
+pip install networkx  # xlsx 需要
+pip install pypdf pdf2image  # pdf 需要（可能需要 MSYS2）
