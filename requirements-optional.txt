@@ -1,0 +1,2 @@
+openai-whisper>=20240930
+unstructured[all-docs]>=0.15.0
