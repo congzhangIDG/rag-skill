@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: cli-anything-rag-skill
+Version: 0.1.0
+Summary: CLI-Anything harness for scripts/rag backend
+Requires-Python: >=3.9
+Requires-Dist: click>=8.1.0
+Requires-Dist: chromadb>=1.0.0
+Requires-Dist: requests>=2.31.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: trafilatura>=2.0.0
+Requires-Dist: yt-dlp>=2024.0.0
+Requires-Dist: filelock>=3.0.0
+Requires-Dist: pysqlite3>=0.5.2
+Provides-Extra: test
+Requires-Dist: pytest>=7.0.0; extra == "test"
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

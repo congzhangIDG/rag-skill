@@ -1,0 +1,2 @@
+[console_scripts]
+cli-anything-rag-skill = cli_anything.rag_skill.__main__:main
